@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const DECORATIVE = [
-  { key: "desk",   src: "/images/home/desk.png",   style: { left: "-5%",  top: "-4%", width: "100%" } },
+  { key: "desk",   src: "/images/home/desk.png",   style: { left: "-1%",  top: "-3%", width: "95%" } },
   { key: "chichi", src: "/images/home/chichi.png", style: { left: "-5%",  top: "35%",  width: "25%"  } },
   { key: "drink",  src: "/images/home/drink.png",  style: { left: "35%",  top: "-40%", width: "26%"  } },
   { key: "tuniu",  src: "/images/home/tuniu.png",  style: { left: "65%",  top: "-5%",  width: "22%"  } },

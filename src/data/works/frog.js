@@ -12,8 +12,8 @@ export const frog = {
     // { label: "Download · Windows", url: "https://we.tl/t-ti26uBB9mHtZVzh3" },
   ],
   images: [
-    "/images/work/frog/detail-1.jpg",
-    "/images/work/frog/detail-2.jpg",
+    "/images/work/frog/detail-1.png",
+    "/images/work/frog/detail-2.png",
     { scroll: [
       { src: "/images/work/frog/result-1.jpg" },
       { src: "/images/work/frog/result-2.jpg" },

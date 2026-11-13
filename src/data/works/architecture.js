@@ -1,5 +1,6 @@
 export const architecture = {
   id: "architecture",
+  order: 4,
   title: "Elder Choice",
   category: "TEAM · Computational Design | Human-Computer Interaction Design",
   cover: "/images/work/architecture/cover.jpg",

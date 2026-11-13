@@ -1,5 +1,6 @@
 export const mobilePleasure = {
   id: "mobilePleasure",
+  order: 6,
   title: "MobilePleasure Abodes",
   category: "INDIVIDUAL · Computational Design | Architecture",
   cover: "/images/work/Mobile Pleasure/4.png",

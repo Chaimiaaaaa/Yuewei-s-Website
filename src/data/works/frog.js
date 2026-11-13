@@ -1,5 +1,6 @@
 export const frog = {
   id: "frog",
+  order: 2,
   title: "You're Frog",
   category: "TEAM · Game Art Design | KTH Course work",
   cover: "/images/work/frog/cover.jpg",

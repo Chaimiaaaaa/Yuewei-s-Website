@@ -1,5 +1,6 @@
 export const iot = {
   id: "iot",
+  order: 2,
   title: "Ephemeron",
   category: "TEAM · UX Design | IoT Device | AI-assisted Design",
   cover: "/images/work/iot/cover.jpg",

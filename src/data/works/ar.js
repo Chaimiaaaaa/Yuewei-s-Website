@@ -1,5 +1,6 @@
 export const ar = {
   id: "ar",
+  order: 1,
   title: "If City Can Talk",
   category: "INDIVIDUAL · UX Design | AR Design",
   cover: "/images/work/ar/cover.jpg",

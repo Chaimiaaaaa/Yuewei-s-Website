@@ -4,14 +4,16 @@
 // ─────────────────────────────────────────
 
 // ── WORKS ──
-import { ar }           from "./works/ar.js";
-import { iot }          from "./works/iot.js";
-import { robotic }      from "./works/robotic.js";
-import { architecture } from "./works/architecture.js";
-import { frog }         from "./works/frog.js";
-import { mobilePleasure }         from "./works/mobilePleasure.js";
+// Every file in ./works/ is loaded automatically — just add a new .js file.
+// On the site, projects are shown newest year first (see workPresenter /
+// sidebarPresenter). Within the same year, `order` decides who comes first
+// (smaller = earlier); projects without `order` go last in their year.
+const workModules = import.meta.glob("./works/*.js", { eager: true });
 
-export const projects = [ ar, iot, robotic, architecture, frog ,mobilePleasure];
+export const projects = Object.values(workModules)
+  .flatMap((mod) => Object.values(mod))
+  .filter((p) => p && typeof p === "object" && p.id)
+  .sort((a, b) => (a.order ?? Infinity) - (b.order ?? Infinity));
 
 // ── ART ──
 import { kpop } from "./art/kpop.js";

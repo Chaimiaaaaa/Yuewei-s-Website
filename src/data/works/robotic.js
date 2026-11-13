@@ -1,5 +1,6 @@
 export const robotic = {
   id: "robotic",
+  order: 3,
   title: "EmoWeave",
   category: "INDIVIDUAL · Robotic Arm Manufacturing | Human-Robot Interaction Design",
   cover: "/images/work/robotic/cover.jpg",

@@ -1,6 +1,7 @@
 // views/workView.jsx
 import { lazyImg } from "./lazyImg.js";
 import { useState, useEffect, useRef } from "react";
+import { asset } from "../asset.js";
 
 export function WorkView({ projects, initialOpenIndex, yearTab, onReadMoreCB }) {
   const [isOpen, setIsOpen]             = useState(initialOpenIndex >= 0);
@@ -225,7 +226,7 @@ export function WorkView({ projects, initialOpenIndex, yearTab, onReadMoreCB }) 
 
         {!isOpen ? (
           <div className="book__closed" onClick={openACB}>
-            <img src="/images/work/bookfront.webp" alt="Portfolio" className="book__cover-img" />
+            <img src={asset("/images/work/bookfront.webp")} alt="Portfolio" className="book__cover-img" />
             <span className="book__closed-hint">tap to open</span>
           </div>
         ) : (

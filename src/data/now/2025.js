@@ -66,12 +66,12 @@ export const now2025 = [
           { type: "text", value: "2025.6.24 - 2025.7.2" },
           { type: "text", value: "2025.6.24 Kyoto 京都" },
           { type: "scroll", images: [
-            { src: "public/images/now/2025/japan/IMG_3606.jpeg" },
-            { src: "public/images/now/2025/japan/IMG_3628.jpeg" },
-            { src: "public/images/now/2025/japan/IMG_3631.jpeg" },
-            { src: "public/images/now/2025/japan/IMG_3632.jpeg" },
-            { src: "public/images/now/2025/japan/IMG_3641.jpeg" },
-            { src: "public/images/now/2025/japan/IMG_3729.jpeg" },
+            { src: "/images/now/2025/japan/IMG_3606.jpeg" },
+            { src: "/images/now/2025/japan/IMG_3628.jpeg" },
+            { src: "/images/now/2025/japan/IMG_3631.jpeg" },
+            { src: "/images/now/2025/japan/IMG_3632.jpeg" },
+            { src: "/images/now/2025/japan/IMG_3641.jpeg" },
+            { src: "/images/now/2025/japan/IMG_3729.jpeg" },
           ]},
           
         ],

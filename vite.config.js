@@ -50,7 +50,7 @@ function scanImageFolders(root) {
   return result;
 }
 
-function scanImageSizes(publicDir) {
+function scanImageSizes(publicDir, base) {
   const sizes = {};
   function walk(dir) {
     for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -60,7 +60,8 @@ function scanImageSizes(publicDir) {
       try {
         const { width, height, orientation } = imageSize(full);
         const rotated = orientation >= 5 && orientation <= 8; // EXIF 90° turns
-        const key = "/" + path.relative(publicDir, full).split(path.sep).join("/");
+        // key = URL the page will use, e.g. "/Yuewei-s-Website/images/a.jpg"
+        const key = base + path.relative(publicDir, full).split(path.sep).join("/");
         sizes[key] = rotated ? [height, width] : [width, height];
       } catch { /* unreadable image: just skip it */ }
     }
@@ -97,11 +98,12 @@ function orderedImageFolders(root) {
 }
 
 function imageFoldersPlugin() {
-  let imagesRoot, publicDir;
+  let imagesRoot, publicDir, base;
   return {
     name: "image-folders",
     configResolved(config) {
       publicDir = config.publicDir;
+      base = config.base;
       imagesRoot = path.join(publicDir, "images");
     },
     resolveId(id) {
@@ -113,7 +115,7 @@ function imageFoldersPlugin() {
         return "export default " + JSON.stringify(orderedImageFolders(imagesRoot));
       }
       if (id === RESOLVED_SIZES_ID) {
-        return "export default " + JSON.stringify(scanImageSizes(publicDir));
+        return "export default " + JSON.stringify(scanImageSizes(publicDir, base));
       }
     },
     configureServer(server) {
@@ -136,5 +138,8 @@ function imageFoldersPlugin() {
 }
 
 export default defineConfig({
+  // Where the site lives. "/" locally and on Netlify; the GitHub Pages
+  // workflow sets BASE_PATH=/Yuewei-s-Website/ (see .github/workflows/deploy.yml)
+  base: process.env.BASE_PATH || "/",
   plugins: [react(), imageFoldersPlugin()],
 });

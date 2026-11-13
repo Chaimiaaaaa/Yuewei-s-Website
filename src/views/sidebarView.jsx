@@ -1,4 +1,5 @@
 // views/sidebarView.jsx
+import { asset } from "../asset.js";
 
 const NAV_PAGES = ["Home", "Work", "Art", "Now", "About"];
 
@@ -9,7 +10,7 @@ export function SidebarView({ currentPage, expandedItems, activeSubItem, onPageC
       <div className="sidebar-avatar-wrap">
         <img
           className="sidebar-avatar"
-          src="/images/avatar.png"
+          src={asset("/images/avatar.png")}
           alt="avatar"
         />
       </div>

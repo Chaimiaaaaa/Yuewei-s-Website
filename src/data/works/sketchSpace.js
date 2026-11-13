@@ -8,8 +8,8 @@ export const sketchSpace = {
 
   description: "Sketchspace is a collaborative collage and drawing web app. Users search for photos on Unsplash, drop them onto a canvas together with simple shapes, cut the photos into those shapes, and draw on top with different brushes. A canvas can be kept private or shared, and everyone who opens a shared canvas draws on it at the same time: every line, photo and shape shows up for the others in real time.",
   links: [
-    { label: "Website", url: "https://chaimi760970774.github.io/Sketchspace/" },
-    { label: "Frontend repo", url: "https://github.com/chaimi760970774/Sketchspace.git" },
+    { label: "Website", url: "https://chaimiaaaaa.github.io/Sketchspace/" },
+    { label: "Frontend repo", url: "https://github.com/Chaimiaaaaa/Sketchspace" },
     { label: "Backend repo", url: "https://github.com/yukistillalive/sketchspace-server.git" },
 
   ],

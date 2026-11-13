@@ -54,7 +54,7 @@ export function NowDetailView({ item }) {
 
   return (
     <main className="main">
-      <span className="detail-back" onClick={() => navigate("/now")}>← Back</span>
+      <span className="detail-back" onClick={() => navigate("/now")}>←︎ Back</span>
 
       <div className="now-detail__header">
         <span className="now-tag">{item.tag}</span>

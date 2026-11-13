@@ -8,7 +8,7 @@ export function ArtDetailView({ artwork }) {
 
   return (
     <main className="main">
-      <span className="detail-back" onClick={() => navigate("/art")}>← Back</span>
+      <span className="detail-back" onClick={() => navigate("/art")}>←︎ Back</span>
 
       <div className="detail-image-wrap">
         {artwork.image

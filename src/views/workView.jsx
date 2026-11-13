@@ -81,6 +81,35 @@ export function WorkView({ projects, initialOpenIndex, yearTab, onReadMoreCB }) 
     );
   }
 
+  // ── render a video block ──
+  //   { video: "/path.mp4", width, border, autoplay, poster, caption }
+  function renderVideoCB(item, key) {
+    const widthClass = {
+      "full":       "gl-img--full",
+      "two-thirds": "gl-img--two-thirds",
+      "half":       "gl-img--half",
+    }[item.width] || "gl-img--full";
+
+    const classes = ["gl-img", "gl-video", widthClass];
+    if (item.border === false) classes.push("gl-img--no-border");
+
+    return (
+      <div key={key} className={classes.join(" ")}>
+        <video
+          src={item.video}
+          poster={item.poster}
+          controls={!item.autoplay}
+          autoPlay={!!item.autoplay}
+          muted={!!item.autoplay}
+          loop={!!item.autoplay}
+          playsInline
+          preload="metadata"
+        />
+        {item.caption && <p className="gl-img__caption">{item.caption}</p>}
+      </div>
+    );
+  }
+
   // ── render horizontal scroll strip ──
   function renderScrollCB(items, key) {
     const stripRef = { current: null };
@@ -116,7 +145,11 @@ export function WorkView({ projects, initialOpenIndex, yearTab, onReadMoreCB }) 
         onMouseMove={onMouseMoveCB}
       >
         {items.map((img, i) => (
-          <div key={i} className="gl-scroll__item" onClick={() => setLightboxSrc(img.src)}>
+          <div
+            key={i}
+            className={"gl-scroll__item" + (img.border === true ? " gl-scroll__item--border" : "")}
+            onClick={() => setLightboxSrc(img.src)}
+          >
             <img src={img.src} alt={img.caption || ""} />
           </div>
         ))}
@@ -127,8 +160,9 @@ export function WorkView({ projects, initialOpenIndex, yearTab, onReadMoreCB }) 
   // ── render gallery from data.js images array ──
   function renderGalleryACB(images) {
     return images
-      .filter((item) => item.src || item.row || item.scroll || item.group)
+      .filter((item) => !item.readMore && (item.src || item.video || item.row || item.scroll || item.group))
       .map((item, i) => {
+        if (item.video) return renderVideoCB(item, i);
         if (item.group) {
           return (
             <div key={i} className="gl-group">
@@ -190,7 +224,7 @@ export function WorkView({ projects, initialOpenIndex, yearTab, onReadMoreCB }) 
 
         {!isOpen ? (
           <div className="book__closed" onClick={openACB}>
-            <img src="/images/work/bookfront.png" alt="Portfolio" className="book__cover-img" />
+            <img src="/images/work/bookfront.webp" alt="Portfolio" className="book__cover-img" />
             <span className="book__closed-hint">tap to open</span>
           </div>
         ) : (
@@ -216,7 +250,7 @@ export function WorkView({ projects, initialOpenIndex, yearTab, onReadMoreCB }) 
                 className="book__down-hint"
                 onClick={() => detailRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })}
               >
-                view details ↓
+                view details ↓︎
               </button>
             </div>
 
@@ -231,9 +265,9 @@ export function WorkView({ projects, initialOpenIndex, yearTab, onReadMoreCB }) 
 
         {isOpen && (
           <div className="book__indicator">
-            <span className="book__arrow" onClick={() => goToACB(currentIndex - 1)}>←</span>
+            <span className="book__arrow" onClick={() => goToACB(currentIndex - 1)}>←︎</span>
             <span className="book__page-label">{currentIndex + 1} / {total}</span>
-            <span className="book__arrow" onClick={() => goToACB(currentIndex + 1)}>→</span>
+            <span className="book__arrow" onClick={() => goToACB(currentIndex + 1)}>→︎</span>
           </div>
         )}
 
@@ -242,7 +276,7 @@ export function WorkView({ projects, initialOpenIndex, yearTab, onReadMoreCB }) 
             className="book__read-more"
             onClick={(e) => { e.stopPropagation(); onReadMoreCB(project.id); }}
           >
-            Read more ↗
+            Read more
           </button>
         )}
       </div>
@@ -261,7 +295,7 @@ export function WorkView({ projects, initialOpenIndex, yearTab, onReadMoreCB }) 
             <div className="work-detail__links">
               {project.links.map((link, i) => (
                 <a key={i} href={link.url} target="_blank" rel="noreferrer" className="work-detail__link">
-                  {link.label} ↗
+                  {link.label} ↗︎
                 </a>
               ))}
             </div>
@@ -273,7 +307,7 @@ export function WorkView({ projects, initialOpenIndex, yearTab, onReadMoreCB }) 
             className="work-detail__back-up"
             onClick={() => bookRef.current?.scrollIntoView({ behavior: "smooth" })}
           >
-            ↑ back to book
+            ↑︎ back to book
           </button>
         </div>
       )}

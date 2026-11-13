@@ -1,74 +1,27 @@
-export const kpop = [
-  {
-    id: "art-260520",
-    title: "Fanart",
-    category: "kpop",
-    image: "/images/art/kpop/art-260520.jpg",
-    year: "2026.5.23",
-    description: "Hanjin",
-  },
-  {
-    id: "art-2",
-    title: "Fanart",
-    category: "kpop",
-    image: "/images/art/kpop/art-2.jpg",
-    year: "2026.5.23",
-    description: "",
-  },
-  {
-    id: "art-260521",
-    title: "Fanart",
-    category: "kpop",
-    image: "/images/art/kpop/art-260521.jpg",
-    year: "2026.5.21",
-    description: "Youngjae",
-  },
-  {
-    id: "art-260523",
-    title: "Fanart",
-    category: "kpop",
-    image: "/images/art/kpop/art-260523.jpg",
-    year: "2026.5.23",
-    description: "Yeonjun Kai",
-  },
-  {
-    id: "art-1",
-    title: "Fanart",
-    category: "kpop",
-    image: "/images/art/kpop/art-1.jpg",
-    year: "2026.5.23",
-    description: "",
-  },
-  {
-    id: "art-3",
-    title: "Fanart",
-    category: "kpop",
-    image: "/images/art/kpop/art-3.jpg",
-    year: "2026.5.23",
-    description: "",
-  },
-  {
-    id: "art-4",
-    title: "Fanart",
-    category: "kpop",
-    image: "/images/art/kpop/art-4.jpg",
-    year: "2026.5.23",
-    description: "",
-  },
-  {
-    id: "art-5",
-    title: "Fanart",
-    category: "kpop",
-    image: "/images/art/kpop/art-5.jpg",
-    year: "2026.5.23",
-    description: "",
-  },
-  {
-    id: "art-6",
-    title: "Fanart",
-    category: "kpop",
-    image: "/images/art/kpop/art-6.jpg",
-    year: "2026.5.23",
-    description: "",
-  },
-];
+// ─────────────────────────────────────────
+//  Fanart  –  every image in public/images/art/kpop/ shows up automatically.
+//  Order: most recently added first (see src/data/imageOrder.json).
+//
+//  Optional: add a year / description for a painting below,
+//  using its file name WITHOUT the extension, e.g. "art-12".
+// ─────────────────────────────────────────
+import { listImages } from "../imageFolders.js";
+
+const info = {
+  "art-1": { year: "2026.5.23" },
+  "art-2": { year: "2026.5.23" },
+  "art-3": { year: "2026.5.23" },
+  "art-4": { year: "2026.5.23" },
+  "art-6": { year: "2026.5.23" },
+  // "art-12": { year: "2026.11", description: "..." },
+};
+
+export const kpop = listImages("art/kpop").map((img) => ({
+  id: img.id,
+  title: "Fanart",
+  category: "kpop",
+  image: img.src,
+  year: "",
+  description: "",
+  ...info[img.id],
+}));

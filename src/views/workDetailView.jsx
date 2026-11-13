@@ -17,9 +17,14 @@ export function WorkDetailView({ project }) {
 
   if (!project) return <main className="main"><p className="state-msg">Project not found.</p></main>;
 
+  // "Read more" page images: plain strings, or { src, readMore: true, border: false }
+  const readMoreImages = (project.images || [])
+    .filter((img) => typeof img === "string" || img.readMore)
+    .map((img) => (typeof img === "string" ? { src: img } : img));
+
   return (
     <main className="main">
-      <span className="detail-back" onClick={() => navigate("/work?open=" + project.id)}>← Back</span>
+      <span className="detail-back" onClick={() => navigate("/work?open=" + project.id)}>←︎ Back</span>
 
       <p className="detail-title">{project.title}</p>
       <p className="detail-meta">{project.year} · {project.category}</p>
@@ -29,10 +34,14 @@ export function WorkDetailView({ project }) {
       )}
 
       <div className="gallery">
-        {project.images && project.images.filter(img => typeof img === "string").length > 0
-          ? project.images.filter(img => typeof img === "string").map((src, i) => (
-              <div key={i} className="gallery-img" onClick={() => setLightboxSrc(src)}>
-                <img src={src} alt={project.title + " " + (i + 1)} />
+        {readMoreImages.length > 0
+          ? readMoreImages.map((img, i) => (
+              <div
+                key={i}
+                className={"gallery-img" + (img.border === false ? " gallery-img--no-border" : "")}
+                onClick={() => setLightboxSrc(img.src)}
+              >
+                <img src={img.src} alt={project.title + " " + (i + 1)} />
               </div>
             ))
           : Array.from({ length: 4 }).map((_, i) => (

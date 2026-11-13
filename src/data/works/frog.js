@@ -1,6 +1,6 @@
 export const frog = {
   id: "frog",
-  order: 2,
+  order: 3,
   title: "You're Frog",
   category: "TEAM · Game Art Design | KTH Course work",
   cover: "/images/work/frog/cover.jpg",
@@ -13,13 +13,13 @@ export const frog = {
     // { label: "Download · Windows", url: "https://we.tl/t-ti26uBB9mHtZVzh3" },
   ],
   images: [
-    "/images/work/frog/detail-1.png",
-    "/images/work/frog/detail-2.png",
+    "/images/work/frog/detail-1.webp",
+    "/images/work/frog/detail-2.webp",
     { scroll: [
       { src: "/images/work/frog/result-1.jpg" },
       { src: "/images/work/frog/result-2.jpg" },
     ]},
-    { src: "/images/work/frog/result-3.png", width: "full", blend: true, border: false },
-    { src: "/images/work/frog/result-4.png", width: "full", blend: true, border: false },
+    { src: "/images/work/frog/result-3.webp", width: "full", blend: true, border: false },
+    { src: "/images/work/frog/result-4.webp", width: "full", blend: true, border: false },
   ],
 };

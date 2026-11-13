@@ -13,8 +13,8 @@ const EXPANDED_ITEMS = {
   home:  [],
   work:  workYears.map((y) => ({ label: y, value: y })),
   art:   [
-    { label: "Kpop Fanart", value: "kpop" },
-    { label: "Doll",   value: "doll" },
+    { label: "Fanart",       value: "kpop" },
+    { label: "Side Quests",  value: "doll" },
   ],
   now:   nowYears.map((y) => ({ label: String(y), value: String(y) })),
   about: [

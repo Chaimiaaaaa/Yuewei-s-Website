@@ -100,7 +100,7 @@ export function NowView({ entries }) {
                   <span className="now-tag">{item.tag}</span>
                   <span className="now-text">
                     {item.text}
-                    {clickable && <span className="now-arrow"> →</span>}
+                    {clickable && <span className="now-arrow"> →︎</span>}
                   </span>
                 </div>
               );

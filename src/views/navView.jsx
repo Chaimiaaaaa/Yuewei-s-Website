@@ -14,7 +14,11 @@ export function NavView({ name }) {
 
   return (
     <nav className="nav">
-      <span className="nav-name">{name}</span>
+      {/* "Chai" in pink, "mi" in green */}
+      <span className="nav-name">
+        <span className="nav-name__pink">{name.slice(0, 4)}</span>
+        <span className="nav-name__green">{name.slice(4)}</span>
+      </span>
       <ul className="nav-links">
         {PAGES.map(({ path, label }) => (
           <li key={path}>

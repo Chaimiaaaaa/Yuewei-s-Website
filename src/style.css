@@ -10,7 +10,10 @@
   --warm-white:  #faf9f6;
   --ink:         #2a2622;
   --ink-light:   #7a746c;
-  --accent:      #8aab82;
+  /* Brand colors — use these two for every pink / green on the site */
+  --pink:        #F1CAC9;
+  --green:       #B0CFC2;
+  --accent:      var(--green);
   --border:      #e4e0d8;
 
   --font-serif:  'EB Garamond', serif;
@@ -63,6 +66,9 @@ body {
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
+
+.nav-name__pink  { color: var(--pink); }
+.nav-name__green { color: var(--green); }
 
 .nav-links {
   display: flex;
@@ -233,6 +239,22 @@ body {
   100% { transform: rotate(0deg); }
 }
 
+/* idle sway for the 4 clickable desk items (see homeView.jsx) */
+.home-sway {
+  transform-origin: 50% 90%;          /* pivot near the bottom, like it sits on the table */
+  animation: homeSway 3.2s ease-in-out infinite alternate;
+}
+.home-sway--reverse { animation-direction: alternate-reverse; } /* same rhythm, opposite tilt */
+
+@keyframes homeSway {
+  from { transform: rotate(-2.5deg); }
+  to   { transform: rotate(2.5deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-sway { animation: none; }     /* respect "reduce motion" system setting */
+}
+
 .home-item-label {
   position: absolute;
   top: 50%;
@@ -355,7 +377,7 @@ body {
   box-shadow: 0 8px 40px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04);
   overflow: hidden;
   position: relative;
-  /*border: 5px solid #F3C2C3;*/
+  /*border: 5px solid var(--pink);*/
 }
 
 @keyframes flipLeft {
@@ -774,8 +796,8 @@ body {
 
 /* ── IMAGE LOADING PLACEHOLDER (see views/SmartImg.jsx) ── */
 img.is-loading {
-  background-color: #fcf0f2;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='24'%3E%3Ctext x='80' y='17' text-anchor='middle' font-family='DM Sans, Helvetica, Arial, sans-serif' font-size='13' letter-spacing='1' fill='%23e8a1b0'%3Eloading%26gt%3B3%26lt%3B...%3C/text%3E%3C/svg%3E");
+  background-color: var(--green);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='24'%3E%3Ctext x='80' y='17' text-anchor='middle' font-family='DM Sans, Helvetica, Arial, sans-serif' font-size='13' letter-spacing='1' fill='%23F1CAC9'%3Eloading%26gt%3B3%26lt%3B...%3C/text%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: center;
   background-size: 160px 24px;

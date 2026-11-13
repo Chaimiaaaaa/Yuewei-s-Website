@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────
-//  SmartImg.jsx  –  an <img> that shows a light-pink "loading>3<..."
+//  SmartImg.jsx  –  an <img> that shows a pink-on-green "loading>3<..."
 //  placeholder until the picture has arrived.
 //
 //  <SmartImg src={...} alt="" />              lazy (loads when scrolled near)

@@ -12,9 +12,9 @@ const DECORATIVE = [
 
 const INTERACTIVE = [
   { key: "about", src: asset("/images/home/about.webp"), label: "About", route: "/about", style: { left: "10%", top: "5%",  width: "25%" } },
-  { key: "work",  src: asset("/images/home/work.webp"),  label: "Work",  route: "/work",  style: { left: "5%",  top: "30%", width: "32%" } },
-  { key: "now",   src: asset("/images/home/now.png"),   label: "Now",   route: "/now",   style: { left: "33%", top: "27%", width: "25%" } },
-  { key: "art",   src: asset("/images/home/art.webp"),   label: "Art",   route: "/art",   style: { left: "40%", top: "42%", width: "30%" } },
+  { key: "work",  src: asset("/images/home/work.webp"),  label: "Work",  route: "/work",  style: { left: "28.3%", top: "23%", width: "32%" } },
+  { key: "now",   src: asset("/images/home/now.png"),   label: "Now",   route: "/now",   style: { left: "48%", top: "48%", width: "25%" } },
+  { key: "art",   src: asset("/images/home/art.webp"),   label: "Art",   route: "/art",   style: { left: "5%", top: "36.0%", width: "30%" } },
 ];
 
 export function HomeView() {
@@ -35,10 +35,12 @@ export function HomeView() {
           />
         ))}
 
-        {INTERACTIVE.map((item) => (
+        {/* clickable items sway gently (in sync, neighbours tilting opposite
+            ways) so they look alive; decorations above stay still */}
+        {INTERACTIVE.map((item, i) => (
           <div
             key={item.key}
-            className="home-item-wrap"
+            className={"home-item-wrap home-sway" + (i % 2 ? " home-sway--reverse" : "")}
             style={item.style}
             onMouseEnter={() => setHovered(item.key)}
             onMouseLeave={() => setHovered(null)}

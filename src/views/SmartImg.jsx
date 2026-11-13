@@ -27,6 +27,9 @@ export function SmartImg({ src, lazy = true, className = "", alt = "", ...rest }
 
   return (
     <img
+      // a NEW <img> for every src: otherwise the browser keeps showing the
+      // previous picture until the next one arrives (and hides the placeholder)
+      key={src}
       ref={ref}
       {...base}
       {...rest}

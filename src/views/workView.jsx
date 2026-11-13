@@ -1,8 +1,19 @@
 // views/workView.jsx
 import { SmartImg } from "./SmartImg.jsx";
+import { bookCoverSrc } from "./lazyImg.js";
 import { Lightbox } from "./Lightbox.jsx";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { asset } from "../asset.js";
+
+// start downloading an image once (the browser cache keeps it for later)
+const preloaded = new Set();
+function preloadImage(src) {
+  if (!src || preloaded.has(src)) return;
+  preloaded.add(src);
+  const img = new Image();
+  img.decoding = "async";
+  img.src = src;
+}
 
 export function WorkView({ projects, initialOpenIndex, yearTab, onReadMoreCB, onPageChangeCB }) {
   const [isOpen, setIsOpen]             = useState(initialOpenIndex >= 0);
@@ -16,6 +27,16 @@ export function WorkView({ projects, initialOpenIndex, yearTab, onReadMoreCB, on
   const bookRef    = useRef(null);
   const detailRef  = useRef(null);
   const total      = projects.length;
+
+  // Download nearby covers in the background so flipping feels instant:
+  // closed book → the first page; open → previous page and the next two.
+  useEffect(() => {
+    if (yearTab) return;
+    const around = isOpen ? [currentIndex - 1, currentIndex + 1, currentIndex + 2] : [0];
+    around
+      .filter((i) => i >= 0 && i < total)
+      .forEach((i) => preloadImage(bookCoverSrc(projects[i].cover)));
+  }, [isOpen, currentIndex, yearTab, projects, total]);
 
 
   function openACB() { setIsOpen(true); setCurrentIndex(0); onPageChangeCB?.(projects[0]?.id ?? null); }
@@ -198,7 +219,7 @@ export function WorkView({ projects, initialOpenIndex, yearTab, onReadMoreCB, on
             <div key={p.id} className="work-card" onClick={() => onReadMoreCB(p.id)}>
               <div className="work-card__img-wrap">
                 {p.cover
-                  ? <SmartImg src={p.cover} alt={p.title} />
+                  ? <SmartImg src={bookCoverSrc(p.cover)} alt={p.title} />
                   : <div className="work-card__placeholder" />
                 }
               </div>
@@ -237,7 +258,7 @@ export function WorkView({ projects, initialOpenIndex, yearTab, onReadMoreCB, on
               <div className="book__half book__half--left"  onClick={() => goToACB(currentIndex - 1)} />
               <div className="book__half book__half--right" onClick={() => goToACB(currentIndex + 1)} />
               {project.cover
-                ? <SmartImg lazy={false} className="book__img" src={project.cover} alt={project.title} />
+                ? <SmartImg lazy={false} className="book__img" src={bookCoverSrc(project.cover)} alt={project.title} />
                 : <div className="book__placeholder">
                     <span className="book__placeholder-title">{project.title}</span>
                     <span className="book__placeholder-sub">{project.year} · {project.category}</span>

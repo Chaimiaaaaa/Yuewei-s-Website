@@ -18,3 +18,12 @@ export function sizeProps(src) {
 export function lazyImg(src) {
   return { ...sizeProps(src), loading: "lazy", decoding: "async" };
 }
+
+// Small version of a project cover for the book pages and year cards:
+// ".../cover.jpg" → ".../cover.book.webp" if that file exists (made by
+// `npm run book-covers`), otherwise the original cover.
+export function bookCoverSrc(cover) {
+  if (!cover) return cover;
+  const small = cover.replace(/\.[^./]+$/, ".book.webp");
+  return imageSizes[small] ? small : cover;
+}

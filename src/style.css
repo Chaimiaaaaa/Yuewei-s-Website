@@ -479,6 +479,8 @@ body {
 }
 
 .work-detail__link:hover { color: var(--ink); }
+/* links on the Read-more page: sit right under the description */
+.detail-links { margin: 20px 0 0; }
 
 .work-detail__gallery {
   display: flex;

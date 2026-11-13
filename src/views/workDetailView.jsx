@@ -27,6 +27,17 @@ export function WorkDetailView({ project }) {
         <p className="detail-description">{project.description}</p>
       )}
 
+      {/* website / repo / trailer links, same as on the Work page */}
+      {project.links && project.links.length > 0 && (
+        <div className="work-detail__links detail-links">
+          {project.links.map((link, i) => (
+            <a key={i} href={link.url} target="_blank" rel="noreferrer" className="work-detail__link">
+              {link.label} ↗︎
+            </a>
+          ))}
+        </div>
+      )}
+
       <div className="gallery">
         {readMoreImages.length > 0
           ? readMoreImages.map((img, i) => (

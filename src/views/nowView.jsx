@@ -1,5 +1,5 @@
 // views/nowView.jsx
-import { lazyImg } from "./lazyImg.js";
+import { SmartImg } from "./SmartImg.jsx";
 import { useState } from "react";
 
 function renderContentCB(block, i) {
@@ -14,7 +14,7 @@ function renderContentCB(block, i) {
     }[block.width] || "gl-img--full";
     return (
       <div key={i} className={"gl-img " + widthClass + (block.blend ? " gl-img--blend" : "")}>
-        <img {...lazyImg(block.src)} alt="" />
+        <SmartImg src={block.src} alt="" />
         {block.caption && <p className="gl-img__caption">{block.caption}</p>}
       </div>
     );
@@ -24,7 +24,7 @@ function renderContentCB(block, i) {
       <div key={i} className="gl-row">
         {block.images.map((img, j) => (
           <div key={j} className="gl-img" style={{ flex: 1, minWidth: 0 }}>
-            <img {...lazyImg(img.src)} alt="" />
+            <SmartImg src={img.src} alt="" />
           </div>
         ))}
       </div>
@@ -35,7 +35,7 @@ function renderContentCB(block, i) {
       <div key={i} className="gl-scroll">
         {block.images.map((img, j) => (
           <div key={j} className="gl-scroll__item">
-            <img {...lazyImg(img.src)} alt="" />
+            <SmartImg src={img.src} alt="" />
           </div>
         ))}
       </div>

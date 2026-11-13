@@ -1,20 +1,13 @@
 // views/workDetailView.jsx
-import { lazyImg } from "./lazyImg.js";
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { SmartImg } from "./SmartImg.jsx";
+import { Lightbox } from "./Lightbox.jsx";
+import { useState } from "react";
+import { useGoBack } from "./useGoBack.js";
 
 export function WorkDetailView({ project }) {
-  const navigate = useNavigate();
+  const goBack = useGoBack("/work?open=" + project?.id);
   const [lightboxSrc, setLightboxSrc] = useState(null);
 
-  // close on ESC
-  useEffect(() => {
-    function onKeyDownCB(e) {
-      if (e.key === "Escape") setLightboxSrc(null);
-    }
-    window.addEventListener("keydown", onKeyDownCB);
-    return () => window.removeEventListener("keydown", onKeyDownCB);
-  }, []);
 
   if (!project) return <main className="main"><p className="state-msg">Project not found.</p></main>;
 
@@ -25,7 +18,7 @@ export function WorkDetailView({ project }) {
 
   return (
     <main className="main">
-      <span className="detail-back" onClick={() => navigate("/work?open=" + project.id)}>←︎ Back</span>
+      <span className="detail-back" onClick={goBack}>←︎ Back</span>
 
       <p className="detail-title">{project.title}</p>
       <p className="detail-meta">{project.year} · {project.category}</p>
@@ -42,7 +35,7 @@ export function WorkDetailView({ project }) {
                 className={"gallery-img" + (img.border === false ? " gallery-img--no-border" : "")}
                 onClick={() => setLightboxSrc(img.src)}
               >
-                <img {...lazyImg(img.src)} alt={project.title + " " + (i + 1)} />
+                <SmartImg src={img.src} alt={project.title + " " + (i + 1)} />
               </div>
             ))
           : Array.from({ length: 4 }).map((_, i) => (
@@ -54,17 +47,7 @@ export function WorkDetailView({ project }) {
       </div>
 
       {/* lightbox */}
-      {lightboxSrc && (
-        <div className="lightbox" onClick={() => setLightboxSrc(null)}>
-          <img
-            className="lightbox__img"
-            src={lightboxSrc}
-            alt="enlarged"
-            onClick={(e) => e.stopPropagation()}
-          />
-          <button className="lightbox__close" onClick={() => setLightboxSrc(null)}>×</button>
-        </div>
-      )}
+      <Lightbox src={lightboxSrc} onClose={() => setLightboxSrc(null)} />
     </main>
   );
 }

@@ -2,6 +2,7 @@
 import { observer } from "mobx-react-lite";
 import { useNavigate, useLocation } from "react-router-dom";
 import { SidebarView } from "../views/sidebarView.jsx";
+import { MobileSubnavView } from "../views/mobileSubnavView.jsx";
 import { projects, artworks, nowEntries } from "../data/index.js";
 
 const nowYears = [...new Set(nowEntries.map((e) => e.year))].sort((a, b) => b - a);
@@ -59,13 +60,19 @@ export const Sidebar = observer(function Sidebar({ model }) {
     }
   }
 
+  const viewProps = {
+    currentPage: model.currentPage,
+    expandedItems: EXPANDED_ITEMS,
+    activeSubItem,
+    onPageClickCB,
+    onSubItemClickCB,
+  };
+
+  // Desktop shows the sidebar; phones show the tab row instead (CSS decides)
   return (
-    <SidebarView
-      currentPage={model.currentPage}
-      expandedItems={EXPANDED_ITEMS}
-      activeSubItem={activeSubItem}
-      onPageClickCB={onPageClickCB}
-      onSubItemClickCB={onSubItemClickCB}
-    />
+    <>
+      <SidebarView {...viewProps} />
+      <MobileSubnavView {...viewProps} />
+    </>
   );
 });

@@ -1,18 +1,19 @@
 // views/artDetailView.jsx
-import { useNavigate } from "react-router-dom";
+import { useGoBack } from "./useGoBack.js";
+import { SmartImg } from "./SmartImg.jsx";
 
 export function ArtDetailView({ artwork }) {
-  const navigate = useNavigate();
+  const goBack = useGoBack("/art");
 
   if (!artwork) return <main className="main"><p className="state-msg">Artwork not found.</p></main>;
 
   return (
     <main className="main">
-      <span className="detail-back" onClick={() => navigate("/art")}>←︎ Back</span>
+      <span className="detail-back" onClick={goBack}>←︎ Back</span>
 
       <div className="detail-image-wrap">
         {artwork.image
-          ? <img src={artwork.image} alt={artwork.title} />
+          ? <SmartImg lazy={false} src={artwork.image} alt={artwork.title} />
           : <span className="home-placeholder">image goes here</span>
         }
       </div>

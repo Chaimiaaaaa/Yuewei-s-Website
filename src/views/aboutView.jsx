@@ -1,5 +1,6 @@
 // views/aboutView.jsx
 import { about } from "../data/index.js";
+import { SmartImg } from "./SmartImg.jsx";
 
 export function AboutView() {
   return (
@@ -9,7 +10,7 @@ export function AboutView() {
       <div className="about-top">
         <div className="about-photo">
           {about.photo
-            ? <img src={about.photo} alt={about.name} />
+            ? <SmartImg lazy={false} src={about.photo} alt={about.name} />
             : <span className="about-photo-placeholder">your photo</span>
           }
         </div>

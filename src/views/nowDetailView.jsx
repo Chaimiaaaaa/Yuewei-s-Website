@@ -1,9 +1,9 @@
 // views/nowDetailView.jsx
-import { lazyImg } from "./lazyImg.js";
-import { useNavigate } from "react-router-dom";
+import { SmartImg } from "./SmartImg.jsx";
+import { useGoBack } from "./useGoBack.js";
 
 export function NowDetailView({ item }) {
-  const navigate = useNavigate();
+  const goBack = useGoBack("/now");
 
   if (!item) return (
     <main className="main">
@@ -23,7 +23,7 @@ export function NowDetailView({ item }) {
       }[block.width] || "gl-img--full";
       return (
         <div key={i} className={"gl-img " + widthClass + (block.blend ? " gl-img--blend" : "")}>
-          <img {...lazyImg(block.src)} alt="" />
+          <SmartImg src={block.src} alt="" />
           {block.caption && <p className="gl-img__caption">{block.caption}</p>}
         </div>
       );
@@ -33,7 +33,7 @@ export function NowDetailView({ item }) {
         <div key={i} className="gl-row">
           {block.images.map((img, j) => (
             <div key={j} className="gl-img" style={{ flex: 1, minWidth: 0 }}>
-              <img {...lazyImg(img.src)} alt="" />
+              <SmartImg src={img.src} alt="" />
             </div>
           ))}
         </div>
@@ -44,7 +44,7 @@ export function NowDetailView({ item }) {
         <div key={i} className="gl-scroll">
           {block.images.map((img, j) => (
             <div key={j} className="gl-scroll__item">
-              <img {...lazyImg(img.src)} alt="" />
+              <SmartImg src={img.src} alt="" />
             </div>
           ))}
         </div>
@@ -55,7 +55,7 @@ export function NowDetailView({ item }) {
 
   return (
     <main className="main">
-      <span className="detail-back" onClick={() => navigate("/now")}>←︎ Back</span>
+      <span className="detail-back" onClick={goBack}>←︎ Back</span>
 
       <div className="now-detail__header">
         <span className="now-tag">{item.tag}</span>

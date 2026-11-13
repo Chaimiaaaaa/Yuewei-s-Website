@@ -1,9 +1,10 @@
 // views/workView.jsx
-import { lazyImg } from "./lazyImg.js";
-import { useState, useEffect, useRef } from "react";
+import { SmartImg } from "./SmartImg.jsx";
+import { Lightbox } from "./Lightbox.jsx";
+import { useState, useRef } from "react";
 import { asset } from "../asset.js";
 
-export function WorkView({ projects, initialOpenIndex, yearTab, onReadMoreCB }) {
+export function WorkView({ projects, initialOpenIndex, yearTab, onReadMoreCB, onPageChangeCB }) {
   const [isOpen, setIsOpen]             = useState(initialOpenIndex >= 0);
   const [isClosing, setIsClosing]       = useState(false);
   const [currentIndex, setCurrentIndex] = useState(initialOpenIndex >= 0 ? initialOpenIndex : 0);
@@ -16,20 +17,13 @@ export function WorkView({ projects, initialOpenIndex, yearTab, onReadMoreCB }) 
   const detailRef  = useRef(null);
   const total      = projects.length;
 
-  useEffect(() => {
-    function onKeyDownCB(e) {
-      if (e.key === "Escape") setLightboxSrc(null);
-    }
-    window.addEventListener("keydown", onKeyDownCB);
-    return () => window.removeEventListener("keydown", onKeyDownCB);
-  }, []);
 
-  function openACB() { setIsOpen(true); setCurrentIndex(0); }
+  function openACB() { setIsOpen(true); setCurrentIndex(0); onPageChangeCB?.(projects[0]?.id ?? null); }
 
   function closeACB() {
     if (isClosing) return;
     setIsClosing(true);
-   
+    onPageChangeCB?.(null);
     setTimeout(() => { setIsOpen(false); setIsClosing(false); setCurrentIndex(0); }, 480);
   }
 
@@ -40,6 +34,7 @@ export function WorkView({ projects, initialOpenIndex, yearTab, onReadMoreCB }) 
     const dir = nextIndex > currentIndex ? "left" : "right";
     setFlipDir(dir);
     setFlipping(true);
+    onPageChangeCB?.(projects[nextIndex].id);
     setTimeout(() => {
       setCurrentIndex(nextIndex);
       setFlipping(false);
@@ -77,7 +72,7 @@ export function WorkView({ projects, initialOpenIndex, yearTab, onReadMoreCB }) 
 
     return (
       <div key={key} className={classes.join(" ")} onClick={() => setLightboxSrc(img.src)}>
-        <img {...lazyImg(img.src)} alt={img.caption || ""} />
+        <SmartImg src={img.src} alt={img.caption || ""} />
         {img.caption && <p className="gl-img__caption">{img.caption}</p>}
       </div>
     );
@@ -152,7 +147,7 @@ export function WorkView({ projects, initialOpenIndex, yearTab, onReadMoreCB }) 
             className={"gl-scroll__item" + (img.border === true ? " gl-scroll__item--border" : "")}
             onClick={() => setLightboxSrc(img.src)}
           >
-            <img {...lazyImg(img.src)} alt={img.caption || ""} />
+            <SmartImg src={img.src} alt={img.caption || ""} />
           </div>
         ))}
       </div>
@@ -203,7 +198,7 @@ export function WorkView({ projects, initialOpenIndex, yearTab, onReadMoreCB }) 
             <div key={p.id} className="work-card" onClick={() => onReadMoreCB(p.id)}>
               <div className="work-card__img-wrap">
                 {p.cover
-                  ? <img {...lazyImg(p.cover)} alt={p.title} />
+                  ? <SmartImg src={p.cover} alt={p.title} />
                   : <div className="work-card__placeholder" />
                 }
               </div>
@@ -242,7 +237,7 @@ export function WorkView({ projects, initialOpenIndex, yearTab, onReadMoreCB }) 
               <div className="book__half book__half--left"  onClick={() => goToACB(currentIndex - 1)} />
               <div className="book__half book__half--right" onClick={() => goToACB(currentIndex + 1)} />
               {project.cover
-                ? <img className="book__img" src={project.cover} alt={project.title} />
+                ? <SmartImg lazy={false} className="book__img" src={project.cover} alt={project.title} />
                 : <div className="book__placeholder">
                     <span className="book__placeholder-title">{project.title}</span>
                     <span className="book__placeholder-sub">{project.year} · {project.category}</span>
@@ -314,17 +309,7 @@ export function WorkView({ projects, initialOpenIndex, yearTab, onReadMoreCB }) 
         </div>
       )}
 
-      {lightboxSrc && (
-        <div className="lightbox" onClick={() => setLightboxSrc(null)}>
-          <img
-            className="lightbox__img"
-            src={lightboxSrc}
-            alt="enlarged"
-            onClick={(e) => e.stopPropagation()}
-          />
-          <button className="lightbox__close" onClick={() => setLightboxSrc(null)}>×</button>
-        </div>
-      )}
+      <Lightbox src={lightboxSrc} onClose={() => setLightboxSrc(null)} />
     </main>
   );
 }

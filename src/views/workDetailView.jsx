@@ -1,4 +1,5 @@
 // views/workDetailView.jsx
+import { lazyImg } from "./lazyImg.js";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -41,7 +42,7 @@ export function WorkDetailView({ project }) {
                 className={"gallery-img" + (img.border === false ? " gallery-img--no-border" : "")}
                 onClick={() => setLightboxSrc(img.src)}
               >
-                <img src={img.src} alt={project.title + " " + (i + 1)} />
+                <img {...lazyImg(img.src)} alt={project.title + " " + (i + 1)} />
               </div>
             ))
           : Array.from({ length: 4 }).map((_, i) => (

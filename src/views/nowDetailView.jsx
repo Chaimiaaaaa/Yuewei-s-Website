@@ -1,4 +1,5 @@
 // views/nowDetailView.jsx
+import { lazyImg } from "./lazyImg.js";
 import { useNavigate } from "react-router-dom";
 
 export function NowDetailView({ item }) {
@@ -22,7 +23,7 @@ export function NowDetailView({ item }) {
       }[block.width] || "gl-img--full";
       return (
         <div key={i} className={"gl-img " + widthClass + (block.blend ? " gl-img--blend" : "")}>
-          <img src={block.src} alt="" />
+          <img {...lazyImg(block.src)} alt="" />
           {block.caption && <p className="gl-img__caption">{block.caption}</p>}
         </div>
       );
@@ -32,7 +33,7 @@ export function NowDetailView({ item }) {
         <div key={i} className="gl-row">
           {block.images.map((img, j) => (
             <div key={j} className="gl-img" style={{ flex: 1, minWidth: 0 }}>
-              <img src={img.src} alt="" />
+              <img {...lazyImg(img.src)} alt="" />
             </div>
           ))}
         </div>
@@ -43,7 +44,7 @@ export function NowDetailView({ item }) {
         <div key={i} className="gl-scroll">
           {block.images.map((img, j) => (
             <div key={j} className="gl-scroll__item">
-              <img src={img.src} alt="" />
+              <img {...lazyImg(img.src)} alt="" />
             </div>
           ))}
         </div>

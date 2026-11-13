@@ -1,0 +1,16 @@
+# Browser caching for the deployed site (Netlify reads this automatically).
+
+# Built JS/CSS: file names change on every build, so cache "forever".
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Images & video: keep 1 day without asking the server; for up to 7 more
+# days show the cached copy instantly while checking for updates in the
+# background. (A replaced image with the SAME file name may take a reload
+# or up to a day to show for returning visitors.)
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400, stale-while-revalidate=604800"

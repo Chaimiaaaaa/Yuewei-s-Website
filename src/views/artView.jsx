@@ -1,4 +1,5 @@
 // views/artView.jsx
+import { lazyImg } from "./lazyImg.js";
 import { useNavigate } from "react-router-dom";
 
 export function ArtView({ artworks }) {
@@ -15,7 +16,7 @@ export function ArtView({ artworks }) {
           <div key={a.id} className="card" onClick={() => goToDetailACB(a.id)}>
             <div className="card-thumb">
               {a.image
-                ? <img src={a.image} alt={a.title} />
+                ? <img {...lazyImg(a.image)} alt={a.title} />
                 : <div className="card-placeholder">no image yet</div>
               }
             </div>

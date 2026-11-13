@@ -2,7 +2,7 @@
    style.css  –  all styles live here
    ───────────────────────────────────────── */
 
-@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400&display=swap');
+/* Fonts (EB Garamond, DM Sans) are loaded in index.html */
 
 /* ── TOKENS ── */
 :root {

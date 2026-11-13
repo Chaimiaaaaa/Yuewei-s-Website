@@ -2,6 +2,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import fs from "node:fs";
 import path from "node:path";
+import { imageSize } from "image-size";
 
 // ─────────────────────────────────────────
 //  imageFolders plugin
@@ -18,6 +19,10 @@ import path from "node:path";
 const IMAGE_EXT = /\.(jpe?g|png|gif|webp|avif)$/i;
 const VIRTUAL_ID = "virtual:image-folders";
 const RESOLVED_ID = "\0" + VIRTUAL_ID;
+// { "/images/work/ar/cover.jpg": [3000, 1687], ... } for every image, so
+// <img> tags can reserve their space (needed for lazy loading + no layout jump)
+const SIZES_ID = "virtual:image-sizes";
+const RESOLVED_SIZES_ID = "\0" + SIZES_ID;
 const ORDER_FILE = path.resolve("src/data/imageOrder.json");
 // Only folders under these (inside public/images/) are auto-listed.
 // Add e.g. "now" here if another section should work the same way.
@@ -43,6 +48,26 @@ function scanImageFolders(root) {
     if (fs.existsSync(dir)) walk(dir);
   }
   return result;
+}
+
+function scanImageSizes(publicDir) {
+  const sizes = {};
+  function walk(dir) {
+    for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+      const full = path.join(dir, e.name);
+      if (e.isDirectory()) { walk(full); continue; }
+      if (!IMAGE_EXT.test(e.name)) continue;
+      try {
+        const { width, height, orientation } = imageSize(full);
+        const rotated = orientation >= 5 && orientation <= 8; // EXIF 90° turns
+        const key = "/" + path.relative(publicDir, full).split(path.sep).join("/");
+        sizes[key] = rotated ? [height, width] : [width, height];
+      } catch { /* unreadable image: just skip it */ }
+    }
+  }
+  const root = path.join(publicDir, "images");
+  if (fs.existsSync(root)) walk(root);
+  return sizes;
 }
 
 function readOrder() {
@@ -72,18 +97,23 @@ function orderedImageFolders(root) {
 }
 
 function imageFoldersPlugin() {
-  let imagesRoot;
+  let imagesRoot, publicDir;
   return {
     name: "image-folders",
     configResolved(config) {
-      imagesRoot = path.join(config.publicDir, "images");
+      publicDir = config.publicDir;
+      imagesRoot = path.join(publicDir, "images");
     },
     resolveId(id) {
       if (id === VIRTUAL_ID) return RESOLVED_ID;
+      if (id === SIZES_ID) return RESOLVED_SIZES_ID;
     },
     load(id) {
       if (id === RESOLVED_ID) {
         return "export default " + JSON.stringify(orderedImageFolders(imagesRoot));
+      }
+      if (id === RESOLVED_SIZES_ID) {
+        return "export default " + JSON.stringify(scanImageSizes(publicDir));
       }
     },
     configureServer(server) {
@@ -92,15 +122,15 @@ function imageFoldersPlugin() {
         const isImage = file.startsWith(imagesRoot) && IMAGE_EXT.test(file);
         const isOrderEdit = path.resolve(file) === ORDER_FILE;
         if (!isImage && !isOrderEdit) return;
-        const mod = server.moduleGraph.getModuleById(RESOLVED_ID);
-        if (mod) server.moduleGraph.invalidateModule(mod);
+        for (const id of [RESOLVED_ID, RESOLVED_SIZES_ID]) {
+          const mod = server.moduleGraph.getModuleById(id);
+          if (mod) server.moduleGraph.invalidateModule(mod);
+        }
         server.ws.send({ type: "full-reload" });
       }
       server.watcher.on("add", onChange);
       server.watcher.on("unlink", onChange);
-      server.watcher.on("change", (file) => {
-        if (path.resolve(file) === ORDER_FILE) onChange(file);
-      });
+      server.watcher.on("change", onChange); // order edits + replaced images
     },
   };
 }

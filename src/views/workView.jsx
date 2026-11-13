@@ -1,4 +1,5 @@
 // views/workView.jsx
+import { lazyImg } from "./lazyImg.js";
 import { useState, useEffect, useRef } from "react";
 
 export function WorkView({ projects, initialOpenIndex, yearTab, onReadMoreCB }) {
@@ -75,7 +76,7 @@ export function WorkView({ projects, initialOpenIndex, yearTab, onReadMoreCB }) 
 
     return (
       <div key={key} className={classes.join(" ")} onClick={() => setLightboxSrc(img.src)}>
-        <img src={img.src} alt={img.caption || ""} />
+        <img {...lazyImg(img.src)} alt={img.caption || ""} />
         {img.caption && <p className="gl-img__caption">{img.caption}</p>}
       </div>
     );
@@ -150,7 +151,7 @@ export function WorkView({ projects, initialOpenIndex, yearTab, onReadMoreCB }) 
             className={"gl-scroll__item" + (img.border === true ? " gl-scroll__item--border" : "")}
             onClick={() => setLightboxSrc(img.src)}
           >
-            <img src={img.src} alt={img.caption || ""} />
+            <img {...lazyImg(img.src)} alt={img.caption || ""} />
           </div>
         ))}
       </div>
@@ -201,7 +202,7 @@ export function WorkView({ projects, initialOpenIndex, yearTab, onReadMoreCB }) 
             <div key={p.id} className="work-card" onClick={() => onReadMoreCB(p.id)}>
               <div className="work-card__img-wrap">
                 {p.cover
-                  ? <img src={p.cover} alt={p.title} />
+                  ? <img {...lazyImg(p.cover)} alt={p.title} />
                   : <div className="work-card__placeholder" />
                 }
               </div>

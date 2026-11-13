@@ -23,12 +23,12 @@ export function AboutView() {
           <div className="about-contact">
             <a href={"mailto:" + about.email}>{about.email}</a>
             <a href={about.instagram} target="_blank" rel="noreferrer">Instagram · CHAIMIAAAAAA</a>
-            <a href={about.xiaohongshu} target="_blank" rel="noreferrer">小红书 · shaolaifanwo1</a>
+            <a href={about.xiaohongshu} target="_blank" rel="noreferrer">Rednote · shaolaifanwo1</a>
           </div>
         </div>
       </div>
 
-      {/* ── BOTTOM: education + awards ── */}
+      {/* ── BOTTOM: education + experience + awards ── */}
       <div className="about-bottom">
 
         <div className="about-section">
@@ -43,6 +43,26 @@ export function AboutView() {
                   <ul className="about-honors">
                     {e.honors.map((h, j) => (
                       <li key={j}>{h}</li>
+                    ))}
+                  </ul>
+                )}
+              </span>
+            </div>
+          ))}
+        </div>
+
+        <div className="about-section">
+          <p className="about-section-title">Experience</p>
+          {(about.experience || []).map((x, i) => (
+            <div key={i} className="about-row">
+              <span className="about-period">{x.period}</span>
+              <span>
+                <span>{x.company}</span>
+                {x.role && <span className="about-major">{x.role}</span>}
+                {x.points && (
+                  <ul className="about-honors">
+                    {x.points.map((p, j) => (
+                      <li key={j}>{p}</li>
                     ))}
                   </ul>
                 )}

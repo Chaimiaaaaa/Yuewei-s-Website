@@ -28,6 +28,29 @@ export const about = {
     },
   ],
 
+  // newest first
+  experience: [
+    {
+      period: "07/2026 – 09/2026",
+      company: "Baicizhan",
+      role: "New Media Operations Intern",
+      points: [
+        "Planned trend-driven content for the Baicizhan vocabulary app",
+        "Produced word-illustration posts, along with AI-generated images and videos",
+        "Helped plan action content for the brand's IP character",
+      ],
+    },
+    {
+      period: "07/2024 – 09/2024",
+      company: "Guangzhou Metro Design & Research Institute",
+      role: "Design Intern",
+      points: [
+        "Contributed to the interior design of several standard and key stations on the Guangzhou Metro, including Xiaoxiangkou and Dongchangping stations",
+        "Produced renderings, 3D scheme models and presentation decks, and used AI-assisted tools to develop design proposals",
+      ],
+    },
+  ],
+
   awards: [
     {
       period: "10/2023 – 02/2024",

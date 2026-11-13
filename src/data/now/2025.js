@@ -90,7 +90,7 @@ export const now2025 = [
         id: "graduation-2025",
         content: [
           { type: "text", value: "2025.6.6" },
-          { type: "text", value: "今天我本科毕业了，回想起这五年为了画图熬过的夜，都已成为过眼云烟了！" },
+    
         ],
         images: [],
       },

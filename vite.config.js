@@ -138,8 +138,9 @@ function imageFoldersPlugin() {
 }
 
 export default defineConfig({
-  // Where the site lives. "/" locally and on Netlify; the GitHub Pages
-  // workflow sets BASE_PATH=/Yuewei-s-Website/ (see .github/workflows/deploy.yml)
+  // Where the site lives. "/" for chaimiaaaaa.github.io (and locally).
+  // The GitHub Pages workflow sets BASE_PATH; it would be "/<repo>/" only if
+  // the repo were not named <user>.github.io (see .github/workflows/deploy.yml)
   base: process.env.BASE_PATH || "/",
   plugins: [react(), imageFoldersPlugin()],
 });
